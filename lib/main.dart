@@ -33,7 +33,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int index = 2;
+  int index = 0;
   final screens = [
     HomeView(),
     Mapping(),

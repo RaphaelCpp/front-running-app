@@ -28,70 +28,110 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Consumer<Auth>(builder: (context, auth, child) {
-            return Text(auth.user.name + auth.user.email);
-          })
-        ],
+      body: Container(
+        child: Consumer<Auth>(builder: (context, auth, child) {
+          return Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FlatButton(
+                    child: Icon(
+                      Icons.logout,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      Provider.of<Auth>(context, listen: false).logout();
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.red,
+                    backgroundImage: NetworkImage(auth.user.avatar),
+                    radius: 30,
+                  ),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          auth.user.name,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: MediaQuery.of(context).size.width * 0.08,
+                            fontFamily: 'Poppins',
+                          ),
+                        ),
+                        Text(
+                          auth.user.email,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: MediaQuery.of(context).size.width * 0.03,
+                            fontFamily: 'Poppins',
+                          ),
+                        ),
+                        Text(
+                          auth.user.created,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: MediaQuery.of(context).size.width * 0.03,
+                            fontFamily: 'Poppins',
+                          ),
+                        ),
+                      ]),
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.1,
+                width: MediaQuery.of(context).size.width * 1,
+              ),
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * .9,
+                child: Text(
+                  "Statistiques du compte",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: MediaQuery.of(context).size.width * 0.05,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                        ),
+                        child: Column(
+                          children: [Text("32,4 km"), Text("km parcourus")],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [Text("cc")],
+                  )
+                ],
+              ),
+            ],
+          );
+        }),
       ),
-      // drawer: Drawer(child: Consumer<Auth>(builder: (context, auth, child) {
-      //   if (!auth.authenticated) {
-      //     return ListView(
-      //       children: [
-      //         ListTile(
-      //           title: Text('Login'),
-      //           leading: Icon(Icons.login),
-      //           onTap: () {
-      //             Navigator.of(context).push(
-      //                 MaterialPageRoute(builder: (context) => LoginView()));
-      //           },
-      //         ),
-      //       ],
-      //     );
-      //   } else {
-      //     return ListView(
-      //       children: [
-      //         DrawerHeader(
-      //           child: Column(
-      //             children: [
-      //               CircleAvatar(
-      //                 backgroundColor: Colors.white,
-      //                 backgroundImage: NetworkImage(auth.user.avatar),
-      //                 radius: 30,
-      //               ),
-      //               SizedBox(
-      //                 height: 10,
-      //               ),
-      //               Text(
-      //                 auth.user.name,
-      //                 style: TextStyle(color: Colors.white),
-      //               ),
-      //               SizedBox(
-      //                 height: 10,
-      //               ),
-      //               Text(
-      //                 auth.user.email,
-      //                 style: TextStyle(color: Colors.white),
-      //               ),
-      //             ],
-      //           ),
-      //           decoration: BoxDecoration(
-      //             color: Colors.blue,
-      //           ),
-      //         ),
-      //         ListTile(
-      //           title: Text('Logout'),
-      //           leading: Icon(Icons.logout),
-      //           onTap: () {
-      //             Provider.of<Auth>(context, listen: false).logout();
-      //           },
-      //         ),
-      //       ],
-      //     );
-      //   }
-      // })),
     );
   }
 }
